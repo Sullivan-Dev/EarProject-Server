@@ -26,8 +26,8 @@ app.listen(3030, () => {
 });
 
 // app.use('/', routes);
-app.use('/', function(request, response)  {
-	console.log('/////');
+app.use('/a', function(request, response)  {
+	console.log('/////a');
     var sentence = 'SELECT * FROM User';
 	client.query(sentence, function(error, results) {
 		response.writeHead(200, {'Content-Type' : 'Text/html'});
@@ -36,8 +36,8 @@ app.use('/', function(request, response)  {
 	});
 });
 
-app.get('/', function(request, response)  {
-	console.log('/////');
+app.get('/b', function(request, response)  {
+	console.log('/////b');
     var sentence = 'SELECT * FROM User';
 	client.query(sentence, function(error, results) {
 		response.writeHead(200, {'Content-Type' : 'Text/html'});
