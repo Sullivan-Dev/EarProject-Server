@@ -21,10 +21,10 @@ module.exports = {
     },
 
     verify(req, res) {
-
+        console.log(`Verify Request`);
     },
 
     signup(req, res) {
-
+        console.log(`Signup Request`);
     },
 }
