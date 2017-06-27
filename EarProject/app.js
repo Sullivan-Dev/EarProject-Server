@@ -12,8 +12,8 @@ var app = express();
 // 미들웨어를 설정합니다.
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(3000, () => {
-  console.log(`Server is running on 3000 port`);
+app.listen(3030, () => {
+  console.log(`Server is running on 3030 port`);
 });
 
 app.use('/', routes);

@@ -10,10 +10,13 @@ var client = mysql.createConnection({
 
 module.exports = {
     login(req, res) {
+        console.log(`Login Request`);
+
         var sentence = 'SELECT * FROM User';
         client.query(sentence, function(error, results) {
             response.writeHead(200, {'Content-Type' : 'Text/html'});
             response.end(results);
+            console.log(results);
         })
     },
 
