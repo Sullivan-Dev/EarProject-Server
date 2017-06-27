@@ -26,6 +26,15 @@ app.listen(3030, () => {
 });
 
 // app.use('/', routes);
+app.use('/', function(request, response)  {
+	console.log('/////');
+    var sentence = 'SELECT * FROM User';
+	client.query(sentence, function(error, results) {
+		response.writeHead(200, {'Content-Type' : 'Text/html'});
+		response.end(results);
+		console.log(results);
+	});
+});
 
 app.get('/', function(request, response)  {
 	console.log('/////');
