@@ -1,8 +1,13 @@
-var mysql = require('mysql');
+const { User } = require('../../data');
 
 module.exports = {
     login(req, res) {
         console.log(`Login Request`);
+       
+        User.findAll()
+            .then(function(users)   {
+                res.json(users);
+            });
     },
 
     verify(req, res) {
