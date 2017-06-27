@@ -5,6 +5,7 @@
 var express = require('express');
 var path = require('path');
 var routes = require('./routes');
+var mysql = require('mysql');
 
 var client = mysql.createConnection({
     host : 'mail.chawoo.me',
