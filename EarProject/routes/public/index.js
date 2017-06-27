@@ -2,8 +2,8 @@ const { user } = require('../../app/public');
 const express = require('express');
 const router = express.Router();
 
-router.get('/login', user.login)
-      .post('/login', user.verify);
+router.post('/verify', user.verify)
+      .post('/login', user.login);
 
 router.post('/signup', user.signup);
 
