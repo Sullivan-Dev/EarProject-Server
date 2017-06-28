@@ -16,9 +16,14 @@ module.exports = {
         .then((reply) => {
             if( !reply )    
                 return res.status(500).send({message: '로그인 정보를 확인해주세요.'});
-            
-            const token = jwt.sign(reply.dataValues, config.JWT_TOKEN);
-            res.send(token);
+            console.log(reply.dataValues);
+            jwt.sign(reply.dataValues, config.JWT_TOKEN, function(err, decode) {
+                if( err )   {
+                    console.log("Error failed: " + err);
+                    return;
+                }
+                res.json({ token: decode });
+            });
         });
     },
 
@@ -42,7 +47,7 @@ module.exports = {
             password: password
         })
         .then(() => {
-            res.send('환영합니다 ' + name + '님');
+            res.send('회원가입이 완료되었습니다.');
         });
     },
 }
