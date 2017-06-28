@@ -38,7 +38,7 @@ module.exports = {
         console.log(`POST /public/signup`);
 
         const {name, mdn, password, gender} = req.body;
-        console.log(name, mdn, password); 
+        console.log(name, mdn, password, gender); 
 
         User
         .create({
