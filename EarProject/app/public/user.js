@@ -37,15 +37,16 @@ module.exports = {
     signup(req, res) {
         console.log(`POST /public/signup`);
 
-        const {name, mdn, password, gender} = req.body;
-        console.log(name, mdn, password, gender); 
+        const {name, mdn, password, gender, did} = req.body;
+        console.log(name, mdn, password, gender, did); 
 
         User
         .create({
             name: name,
             mdn: mdn,
             password: password,
-            gender: gender
+            gender: gender,
+            did: did
         })
         .then(() => {
             res.send('회원가입이 완료되었습니다.');

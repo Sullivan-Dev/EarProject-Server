@@ -8,6 +8,7 @@ module.exports = sequelize.define('User', {
 	},
 	did: {
 		type: Sequelize.INTEGER,
+		defaultValue: 0,
 	},
 	mdn: {
 		type: Sequelize.STRING
