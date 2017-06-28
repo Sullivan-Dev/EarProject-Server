@@ -16,9 +16,6 @@ module.exports = sequelize.define('User', {
 	password: {
 		type: Sequelize.STRING
 	},
-	token: {
-		type: Sequelize.STRING
-	},
 	name: {
 		type: Sequelize.INTEGER
 	},
