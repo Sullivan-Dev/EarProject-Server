@@ -2,11 +2,12 @@
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
-// const { me, users, translators, contacts, districts, services, sessions } = require('../../app/api');
+const { contacts, districts, me, services, sessions, translators } = require('../../app/api');
 const config = require('../../config');
 
 function verify (req, res, next) {
-    const {token} = req.body;
+    var token = req.body.token || req.param('token');
+    
     jwt.verify(token, config.JWT_TOKEN, (err, decoded) => {
         if( err )   {
             console.log(err);
@@ -18,6 +19,6 @@ function verify (req, res, next) {
     });
 }
 
-// router.get('/me', verify, me.getMe);
+router.get('/me', verify, me.getMe);
 
 module.exports = router;
