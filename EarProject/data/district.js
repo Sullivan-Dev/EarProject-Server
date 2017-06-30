@@ -1,28 +1,21 @@
 const Sequelize = require('sequelize');
 const sequelize = require('./sequelize');
 
-module.exports = sequelize.define('User', {
-	uid: {
+module.exports = sequelize.define('District', {
+	did: {
 		primaryKey: true,
 		type: Sequelize.INTEGER,
-	},
-	did: {
-		type: Sequelize.INTEGER,
-		defaultValue: 0,
-	},
-	mdn: {
-		type: Sequelize.STRING
-	},
-	password: {
-		type: Sequelize.STRING
 	},
 	name: {
 		type: Sequelize.STRING
 	},
-	gender: {
+	address: {
+		type: Sequelize.STRING
+	},
+	tel: {
 		type: Sequelize.STRING
 	}, 
 }, {
-	tableName: 'User',
+	tableName: 'District',
     timestamps: true
 });
