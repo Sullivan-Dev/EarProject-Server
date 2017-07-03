@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
-const { contacts, me, services, sessions, translators } = require('../../app/api');
+const { contacts, me, services, sessions } = require('../../app/api');
 const config = require('../../config');
 
 function verify (req, res, next) {

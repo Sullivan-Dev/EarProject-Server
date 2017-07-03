@@ -1,15 +1,15 @@
-const { User } = require('../../data');
+const { Translator } = require('../../data');
 const config = require('../../config');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
     login(req, res) {
-        console.log(`POST /public/login/user`);
+        console.log(`POST /public/login/translator`);
 
         const {mdn, password} = req.body;
         console.log(mdn, password);
         
-        User
+        Translator
         .findOne({
             where: { mdn, password }
         })
@@ -28,7 +28,7 @@ module.exports = {
     },
 
     verify(req, res) {
-        console.log(`POST /public/verify/user`);
+        console.log(`POST /public/verify/translator`);
 
         const {token} = req.body;
 
@@ -42,12 +42,12 @@ module.exports = {
     },
 
     signup(req, res) {
-        console.log(`POST /public/signup/user`);
+        console.log(`POST /public/signup/translator`);
 
         const {name, mdn, password, gender, did} = req.body;
         console.log(name, mdn, password, gender, did); 
 
-        User
+        Translator
         .create({
             name: name,
             mdn: mdn,
