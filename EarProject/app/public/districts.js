@@ -1,7 +1,7 @@
 const { District } = require('../../data');
 
 module.exports = {
-    getDistrict(req, res) {
+    get(req, res) {
         console.log(`GET /public/district`);
         
         const did = req.param('did');
@@ -17,7 +17,7 @@ module.exports = {
         });
     },
 
-    addDistrict(req, res)   {
+    add(req, res)   {
         console.log(`POST /public/district`);
 
         const {name, address, tel} = req.body;
@@ -33,4 +33,16 @@ module.exports = {
             res.send('추가되었습니다.');
         });
     },
+
+    delete(req, res)  {
+        console.log(`DELETE /public/district`);
+
+        const { did } = req.body;
+
+        District.destroy({
+            where: { did: did },
+        });
+
+        res.json({ message: '삭제되었습니다.'});
+    }
 }

@@ -21,7 +21,10 @@ function verify (req, res, next) {
 
 router.get('/me', verify, me.getMe);
 
-router.put('/user/modify', verify, user.modify);
-router.put('/translator/modify', verify, translator.modify);
+router.put('/user', verify, user.modify);
+router.delete('/user', verify, user.delete);
+
+router.put('/translator', verify, translator.modify);
+router.delete('/translator', verify, translator.delete);
 
 module.exports = router;

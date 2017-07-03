@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     modify(req, res) {
-        console.log(`PUT /api/user/modify`);
+        console.log(`PUT /api/user`);
         
         const uid = req.user.uid;
         const { did, mdn, password, name, gender } = req.body;
@@ -20,4 +20,16 @@ module.exports = {
             where: { uid: uid },
         });
     },
+
+    delete(req, res) {
+        console.log(`DELETE /api/user`);
+
+        const uid = req.user.uid;
+
+        User.destroy({
+            where: { uid: uid },
+        });
+
+        res.json({ message: '삭제되었습니다.'});
+    }
 }

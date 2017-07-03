@@ -20,4 +20,16 @@ module.exports = {
             where: { tid: tid },
         });
     },
+
+    delete(req, res) {
+        console.log(`DELETE /api/translator`);
+
+        const tid = req.user.tid;
+
+        Translator.destroy({
+            where: { tid: tid },
+        });
+
+        res.json({ message: '삭제되었습니다.'});
+    }
 }

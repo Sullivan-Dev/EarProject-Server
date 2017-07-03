@@ -10,7 +10,8 @@ router.post('/translator/verify', translator.verify)
       .post('/translator/login', translator.login)
       .post('/translator/signup', translator.signup);
 
-router.get('/district', districts.getDistrict)
-      .post('/district', districts.addDistrict);
+router.get('/district', districts.get)
+      .post('/district', districts.add)
+      .delete('/district', districts.delete);
 
 module.exports = router;
