@@ -5,6 +5,7 @@ module.exports = sequelize.define('District', {
 	did: {
 		primaryKey: true,
 		type: Sequelize.INTEGER,
+		autoIncrement: true
 	},
 	name: {
 		type: Sequelize.STRING

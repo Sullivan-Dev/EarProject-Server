@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
-const { contacts, me, services, sessions } = require('../../app/api');
+const { contacts, me, services, sessions, user, translator } = require('../../app/api');
 const config = require('../../config');
 
 function verify (req, res, next) {
@@ -20,5 +20,8 @@ function verify (req, res, next) {
 }
 
 router.get('/me', verify, me.getMe);
+
+router.put('/user/modify', verify, user.modify);
+router.put('/translator/modify', verify, translator.modify);
 
 module.exports = router;

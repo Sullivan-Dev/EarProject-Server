@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     login(req, res) {
-        console.log(`POST /public/login/user`);
+        console.log(`POST /public/user/login`);
 
         const {mdn, password} = req.body;
         console.log(mdn, password);
@@ -28,7 +28,7 @@ module.exports = {
     },
 
     verify(req, res) {
-        console.log(`POST /public/verify/user`);
+        console.log(`POST /public/user/verify`);
 
         const {token} = req.body;
 
@@ -42,7 +42,7 @@ module.exports = {
     },
 
     signup(req, res) {
-        console.log(`POST /public/signup/user`);
+        console.log(`POST /public/user/signup`);
 
         const {name, mdn, password, gender, did} = req.body;
         console.log(name, mdn, password, gender, did); 
