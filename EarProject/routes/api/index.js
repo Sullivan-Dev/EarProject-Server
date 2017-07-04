@@ -28,8 +28,14 @@ router.put('/translator', verify, translator.modify)
       .delete('/translator', verify, translator.delete);
 
 router.get('/district', districts.get)
+      .get('/district/find', districts.find)
       .post('/district', districts.add)
-      .delete('/district', districts.delete)
-      .get('/district/find', districts.find);
+      .delete('/district', districts.delete);
+
+router.get('/services', services.get)
+      .get('/services/find', services.find)
+      .post('/services', services.add)
+      .delete('/services', services.delete)
+      .put('/services', services.modify);
 
 module.exports = router;

@@ -18,6 +18,9 @@ module.exports = {
             gender: gender
         }, {
             where: { tid: tid },
+        })
+        .then(() => {
+            res.json({ message: '변경되었습니다..'});
         });
     },
 
@@ -26,10 +29,12 @@ module.exports = {
 
         const tid = req.user.tid;
 
-        Translator.destroy({
+        Translator
+        .destroy({
             where: { tid: tid },
+        })
+        .then(() => {
+            res.json({ message: '삭제되었습니다.'});
         });
-
-        res.json({ message: '삭제되었습니다.'});
     }
 }
