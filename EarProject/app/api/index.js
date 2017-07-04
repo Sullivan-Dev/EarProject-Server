@@ -4,12 +4,14 @@ const services = require('./services');
 const sessions = require('./sessions');
 const user = require('./user');
 const translator = require('./translator');
+const districts = require('./districts');
 
 module.exports = {
-  contacts,
-  me,
-  services,
-  sessions,
-  user,
-  translator
+	contacts,
+	me,
+	services,
+	sessions,
+	districts,
+	user,
+	translator
 }

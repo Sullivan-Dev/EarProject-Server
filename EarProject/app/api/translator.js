@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     modify(req, res) {
-        console.log(`PUT /api/translator/modify`);
+        console.log(`PUT /api/translator`);
         
         const tid = req.user.tid;
         const { did, mdn, password, name, gender } = req.body;

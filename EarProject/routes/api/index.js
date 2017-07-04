@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
-const { contacts, me, services, sessions, user, translator } = require('../../app/api');
+const { contacts, me, services, sessions, districts, user, translator } = require('../../app/api');
 const config = require('../../config');
 
 function verify (req, res, next) {
@@ -21,10 +21,15 @@ function verify (req, res, next) {
 
 router.get('/me', verify, me.getMe);
 
-router.put('/user', verify, user.modify);
-router.delete('/user', verify, user.delete);
+router.put('/user', verify, user.modify)
+      .delete('/user', verify, user.delete);
 
-router.put('/translator', verify, translator.modify);
-router.delete('/translator', verify, translator.delete);
+router.put('/translator', verify, translator.modify)
+      .delete('/translator', verify, translator.delete);
+
+router.get('/district', districts.get)
+      .post('/district', districts.add)
+      .delete('/district', districts.delete)
+      .get('/district/find', districts.find);
 
 module.exports = router;
