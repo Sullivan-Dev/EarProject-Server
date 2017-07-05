@@ -54,7 +54,7 @@ module.exports = {
     add(req, res)  {
         console.log(`POST /api/district`);
 
-        const {uid, tid, status, date, start, end, location, purpose, inquiry} = req.body;
+        const { uid, tid, status, date, start, end, location, purpose, inquiry } = req.body;
         console.log(uid, tid, status, date, start, end, location, purpose, inquiry); 
 
         Service
@@ -75,9 +75,9 @@ module.exports = {
     },
 
     modify(req, res)  {
-        console.log(`UPDATE /api/district`);
+        console.log(`PUT /api/district`);
 
-        const {uid, tid, status, date, start, end, location, purpose, inquiry} = req.body;
+        const { sid, uid, tid, status, date, start, end, location, purpose, inquiry } = req.body;
         console.log(uid, tid, status, date, start, end, location, purpose, inquiry); 
 
         Service

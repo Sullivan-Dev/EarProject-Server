@@ -6,14 +6,21 @@ const { contacts, me, services, sessions, districts, user, translator } = requir
 const config = require('../../config');
 
 function verify (req, res, next) {
-    var token = req.body.token || req.param('token');
+    var token = req.body.token || req.query.token;
     
     jwt.verify(token, config.JWT_TOKEN, (err, decoded) => {
         if( err )   {
             console.log(err);
             return res.status(403).send({message: '로그인이 필요한 서비스입니다.'});
         }
-        req.user = decoded;
+        console.log(decoded);
+        
+        if( decoded.uid )   {   // 유저인 경우
+            req.user = decoded;
+        }
+        if( decoded.tid )   {   // 통역사인 경우
+            req.translator = decoded;
+        }
 
         next();
     });
@@ -30,7 +37,8 @@ router.put('/translator', verify, translator.modify)
 router.get('/district', districts.get)
       .get('/district/find', districts.find)
       .post('/district', districts.add)
-      .delete('/district', districts.delete);
+      .delete('/district', districts.delete)
+      .put('/district', districts.modify);
 
 router.get('/services', services.get)
       .get('/services/find', services.find)

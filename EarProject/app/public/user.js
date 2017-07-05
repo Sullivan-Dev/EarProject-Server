@@ -6,7 +6,7 @@ module.exports = {
     login(req, res) {
         console.log(`POST /public/user/login`);
 
-        const {mdn, password} = req.body;
+        const { mdn, password } = req.body;
         console.log(mdn, password);
         
         User
@@ -30,7 +30,7 @@ module.exports = {
     verify(req, res) {
         console.log(`POST /public/user/verify`);
 
-        const {token} = req.body;
+        const { token } = req.body;
 
         jwt.verify(token, config.JWT_TOKEN, (err, decoded) => {
             if( err )   {
@@ -44,7 +44,7 @@ module.exports = {
     signup(req, res) {
         console.log(`POST /public/user/signup`);
 
-        const {name, mdn, password, gender, did} = req.body;
+        const { name, mdn, password, gender, did } = req.body;
         console.log(name, mdn, password, gender, did); 
 
         User

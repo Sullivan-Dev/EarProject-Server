@@ -20,7 +20,7 @@ module.exports = {
     add(req, res)   {
         console.log(`POST /api/district`);
 
-        const {name, address, tel} = req.body;
+        const { name, address, tel } = req.body;
         console.log(name, address, tel); 
 
         District
@@ -72,5 +72,24 @@ module.exports = {
                            translators: translators });
             });
         });  
+    },
+
+    modify(req, res)  {
+        console.log(`PUT /api/district`);
+
+        const { did, name, address, tel } = req.body;
+        console.log(did, name, address, tel); 
+
+        District
+        .update({
+            name: name,
+            address: address,
+            tel: tel,
+        }, {
+            where: { did: did },
+        })
+        .then(() => {
+            res.json({ message: '변경되었습니다..'});
+        });
     },
 }
