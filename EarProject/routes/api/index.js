@@ -26,7 +26,9 @@ function verify (req, res, next) {
     });
 }
 
-router.get('/me', verify, me.getMe);
+router.get('/me', verify, me.getMe)
+      .put('/me', verify, me.modify)
+      .delete('/me', verify, me.delete);
 
 router.put('/user', verify, user.modify)
       .delete('/user', verify, user.delete);

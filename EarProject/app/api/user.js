@@ -6,7 +6,7 @@ module.exports = {
     modify(req, res) {
         console.log(`PUT /api/user`);
         
-        const uid = req.user.uid;
+        const uid = req.body.uid || req.user.uid;
         const { did, mdn, password, name, gender } = req.body;
         
         return User
@@ -27,7 +27,7 @@ module.exports = {
     delete(req, res) {
         console.log(`DELETE /api/user`);
 
-        const uid = req.user.uid;
+        const uid = req.body.uid || req.user.uid;
 
         return User.destroy({
             where: { uid: uid },
