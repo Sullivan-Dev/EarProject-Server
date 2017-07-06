@@ -9,13 +9,13 @@ module.exports = {
         const { mdn, password } = req.body;
         console.log(mdn, password);
         
-        User
+        return User
         .findOne({
             where: { mdn, password }
         })
         .then((reply) => {
             if( !reply )    
-                return res.status(500).send({message: '로그인 정보를 확인해주세요.'});
+                return res.status(500).send({ message: '로그인 정보를 확인해주세요.' });
             console.log(reply.dataValues);
             jwt.sign(reply.dataValues, config.JWT_TOKEN, function(err, decode) {
                 if( err )   {
@@ -32,12 +32,12 @@ module.exports = {
 
         const { token } = req.body;
 
-        jwt.verify(token, config.JWT_TOKEN, (err, decoded) => {
+        return jwt.verify(token, config.JWT_TOKEN, (err, decoded) => {
             if( err )   {
                 console.log(err);
-                return res.status(403).send({message: '서버에 접속할 수 없습니다. 다시 로그인해주세요.'});
+                return res.status(403).send({ message: '서버에 접속할 수 없습니다. 다시 로그인해주세요.' });
             }
-            res.json({ login : true });
+            res.json({ login: true });
         });
     },
 
@@ -47,7 +47,7 @@ module.exports = {
         const { name, mdn, password, gender, did } = req.body;
         console.log(name, mdn, password, gender, did); 
 
-        User
+        return User
         .create({
             name: name,
             mdn: mdn,
@@ -56,7 +56,7 @@ module.exports = {
             did: did
         })
         .then(() => {
-            res.send('회원가입이 완료되었습니다.');
+            res.send({ message: '회원가입이 완료되었습니다.' });
         });
     },
 }

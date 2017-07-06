@@ -9,7 +9,7 @@ module.exports = {
         const tid = req.user.tid;
         const { did, mdn, password, name, gender } = req.body;
         
-        Translator
+        return Translator
         .update({
             did: did,
             mdn: mdn,
@@ -20,7 +20,7 @@ module.exports = {
             where: { tid: tid },
         })
         .then(() => {
-            res.json({ message: '변경되었습니다..'});
+            res.send({ message: '변경되었습니다..'});
         });
     },
 
@@ -29,12 +29,12 @@ module.exports = {
 
         const tid = req.user.tid;
 
-        Translator
+        return Translator
         .destroy({
             where: { tid: tid },
         })
         .then(() => {
-            res.json({ message: '삭제되었습니다.'});
+            res.send({ message: '삭제되었습니다.'});
         });
     }
 }

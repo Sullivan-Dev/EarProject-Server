@@ -6,14 +6,14 @@ module.exports = {
         
         const did = req.query.did;
 
-        District
+        return District
         .findOne({
             where: { did }
         })
         .then((reply) => {
             if( !reply )    
                 return res.status(500).send({message: '존재하지 않는 센터입니다.'});
-            res.send(reply.dataValues);
+            res.send( reply.dataValues );
         });
     },
 
@@ -23,14 +23,14 @@ module.exports = {
         const { name, address, tel } = req.body;
         console.log(name, address, tel); 
 
-        District
+        return District
         .create({
             name: name,
             address: address,
             tel: tel,
         })
         .then(() => {
-            res.send('추가되었습니다.');
+            res.send({ message: '추가되었습니다.'});
         });
     },
 
@@ -39,39 +39,33 @@ module.exports = {
 
         const { did } = req.body;
 
-        District.destroy({
+        return District.destroy({
             where: { did: did },
+        })
+        .then(() => {
+            res.send({ message: '삭제되었습니다.'});
         });
-
-        res.json({ message: '삭제되었습니다.'});
     },
 
     find(req, res)  {
         console.log(`GET /api/district/find`);
 
         const did = req.query.did;
-        let users, translators;        
 
         User
         .findAll({
             where: { did: did },
         })
-        .then((reply) => {
-            users = reply;
-        })
-        .then(() => {
-            Translator
+        .then((users) => {
+            return Translator
             .findAll({
                 where: { did: did },
             })
-            .then((reply) => {
-                translators = reply;
-            })
-            .then(() => {
-                res.json({ users: users, 
+            .then((translators) => {
+                res.send({ sers: users, 
                            translators: translators });
             });
-        });  
+        });
     },
 
     modify(req, res)  {
@@ -80,7 +74,7 @@ module.exports = {
         const { did, name, address, tel } = req.body;
         console.log(did, name, address, tel); 
 
-        District
+        return District
         .update({
             name: name,
             address: address,
@@ -89,7 +83,7 @@ module.exports = {
             where: { did: did },
         })
         .then(() => {
-            res.json({ message: '변경되었습니다..'});
+            res.send({ message: '변경되었습니다..'});
         });
     },
 }

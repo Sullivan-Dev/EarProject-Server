@@ -4,12 +4,12 @@ module.exports = {
     get(req, res)  {
         console.log(`GET /api/district`);
 
-        Service
+        return Service
         .findAll({
             where: { },
         })
         .then((reply) => {
-            return res.json({services: reply});
+            return res.json({ services: reply });
         });
     },
 
@@ -21,32 +21,32 @@ module.exports = {
 
         // 유저 id와 통역사 id로 검색하는 경우
         if( uid && tid )    {
-            Service
+            return Service
             .findAll({
                 where: { uid: uid, tid: tid },
             })
             .then((reply) => {
-                return res.json({services: reply});
+                return res.json({ services: reply });
             });
         }
         // 유저 id로 검색하는 경우
         if( uid )   {
-            Service
+            return Service
             .findAll({
                 where: { uid: uid },
             })
             .then((reply) => {
-                return res.json({services: reply});
+                return res.json({ services: reply });
             });
         }
         // 통역사 id로 검색하는 경우
         if( tid )   {
-            Service
+            return Service
             .findAll({
                 where: { tid: tid },
             })
             .then((reply) => {
-                return res.json({services: reply});
+                return res.json({ services: reply });
             });
         }
     },
@@ -57,7 +57,7 @@ module.exports = {
         const { uid, tid, status, date, start, end, location, purpose, inquiry } = req.body;
         console.log(uid, tid, status, date, start, end, location, purpose, inquiry); 
 
-        Service
+        return Service
         .create({
             uid: uid,
             tid: tid,
@@ -70,7 +70,7 @@ module.exports = {
             inquiry: inquiry
         })
         .then(() => {
-            res.json({ message: '등록되었습니다..'});
+            res.send({ message: '등록되었습니다..'});
         });
     },
 
@@ -80,7 +80,7 @@ module.exports = {
         const { sid, uid, tid, status, date, start, end, location, purpose, inquiry } = req.body;
         console.log(uid, tid, status, date, start, end, location, purpose, inquiry); 
 
-        Service
+        return Service
         .update({
             uid: uid,
             tid: tid,
@@ -95,7 +95,7 @@ module.exports = {
             where: { sid: sid },
         })
         .then(() => {
-            res.json({ message: '변경되었습니다..'});
+            res.send({ message: '변경되었습니다..'});
         });
     },
 
@@ -104,12 +104,12 @@ module.exports = {
 
         const { sid } = req.body;
 
-        Service
+        return Service
         .destroy({
             where: { sid: sid },
         })
         .then(() => {
-            res.json({ message: '삭제되었습니다.'});
+            res.send({ message: '삭제되었습니다.'});
         });
     }
 }

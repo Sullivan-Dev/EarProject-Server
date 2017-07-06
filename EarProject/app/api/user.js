@@ -9,7 +9,7 @@ module.exports = {
         const uid = req.user.uid;
         const { did, mdn, password, name, gender } = req.body;
         
-        User
+        return User
         .update({
             did: did,
             mdn: mdn,
@@ -18,6 +18,9 @@ module.exports = {
             gender: gender
         }, {
             where: { uid: uid },
+        })
+        .then(() => {
+            res.send({ message: '수정되었습니다.'});
         });
     },
 
@@ -26,10 +29,11 @@ module.exports = {
 
         const uid = req.user.uid;
 
-        User.destroy({
+        return User.destroy({
             where: { uid: uid },
+        })
+        .then(() => {
+            res.send({ message: '삭제되었습니다.'});
         });
-
-        res.json({ message: '삭제되었습니다.'});
     }
 }
