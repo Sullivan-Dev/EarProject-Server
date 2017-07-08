@@ -2,7 +2,7 @@ const { Service } = require('../../data');
 
 module.exports = {
     get(req, res)  {
-        console.log(`GET /api/district`);
+        console.log(`GET /api/services/sid`);
 
         return Service
         .findAll({
@@ -13,8 +13,20 @@ module.exports = {
         });
     },
 
+    getAll(req, res)  {
+        console.log(`GET /api/services`);
+
+        return Service
+        .findAll({
+            where: { sid: req.params.sid },
+        })
+        .then((reply) => {
+            return res.json({ services: reply });
+        });
+    },
+
     find(req, res)  {
-        console.log(`GET /api/district/find`);
+        console.log(`GET /api/services/find`);
 
         const uid = req.query.uid;
         const tid = req.query.tid;
@@ -52,7 +64,7 @@ module.exports = {
     },
 
     add(req, res)  {
-        console.log(`POST /api/district`);
+        console.log(`POST /api/services`);
 
         const { uid, tid, status, date, start, end, location, purpose, inquiry } = req.body;
         console.log(uid, tid, status, date, start, end, location, purpose, inquiry); 
@@ -75,7 +87,7 @@ module.exports = {
     },
 
     modify(req, res)  {
-        console.log(`PUT /api/district`);
+        console.log(`PUT /api/services`);
 
         const { sid, uid, tid, status, date, start, end, location, purpose, inquiry } = req.body;
         console.log(uid, tid, status, date, start, end, location, purpose, inquiry); 
@@ -100,7 +112,7 @@ module.exports = {
     },
 
     delete(req, res)  {
-        console.log(`DELETE /api/district`);
+        console.log(`DELETE /api/services`);
 
         const { sid } = req.body;
 
