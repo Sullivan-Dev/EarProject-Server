@@ -8,19 +8,19 @@ module.exports = {
         
         const tid = req.body.tid || req.translator.tid;
         const { did, mdn, password, name, gender } = req.body;
-        
+
         return Translator
-        .update({
-            did: did,
-            mdn: mdn,
-            password: password,
-            name: name,
-            gender: gender
-        }, {
-            where: { tid: tid },
+        .findOne({
+            where: { tid }
         })
-        .then(() => {
-            res.send({ message: '변경되었습니다..'});
+        .then((translator) => {
+            translator.update({
+                did:        ( did       || translator.did ),
+                mdn:        ( mdn       || translator.mdn ),
+                password:   ( password  || translator.password ),
+                name:       ( name      || translator.name  ),
+                gender:     ( gender    || translator.gender ),
+            });
         });
     },
 

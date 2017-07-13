@@ -93,21 +93,21 @@ module.exports = {
         console.log(uid, tid, status, date, start, end, location, purpose, inquiry); 
 
         return Service
-        .update({
-            uid: uid,
-            tid: tid,
-            status: status,
-            date: date,
-            start: start,
-            end: end,
-            location: location,
-            purpose: purpose,
-            inquiry: inquiry
-        }, {
-            where: { sid: sid },
+        .findOne({
+            where: { sid }
         })
-        .then(() => {
-            res.send({ message: '변경되었습니다..'});
+        .then((service) => {
+            service.update({
+                uid:        ( uid       || service.uid ),
+                tid:        ( tid       || service.tid ),
+                status:     ( status    || service.status ),
+                date:       ( date      || service.date  ),
+                start:      ( start     || service.start ),
+                end:        ( end       || service.end ),
+                location:   ( location  || service.location ),
+                purpose:    ( purpose   || service.purpose ),
+                inquiry:    ( inquiry   || service.inquiry ),
+            });
         });
     },
 

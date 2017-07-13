@@ -8,19 +8,19 @@ module.exports = {
         
         const uid = req.body.uid || req.user.uid;
         const { did, mdn, password, name, gender } = req.body;
-        
+
         return User
-        .update({
-            did: did,
-            mdn: mdn,
-            password: password,
-            name: name,
-            gender: gender
-        }, {
-            where: { uid: uid },
+        .findOne({
+            where: { uid }
         })
-        .then(() => {
-            res.send({ message: '수정되었습니다.'});
+        .then((user) => {
+            user.update({
+                did:        ( did       || user.did ),
+                mdn:        ( mdn       || user.mdn ),
+                password:   ( password  || user.password ),
+                name:       ( name      || user.name  ),
+                gender:     ( gender    || user.gender ),
+            });
         });
     },
 
