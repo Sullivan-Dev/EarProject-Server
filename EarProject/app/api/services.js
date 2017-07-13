@@ -6,10 +6,10 @@ module.exports = {
 
         return Service
         .findAll({
-            where: { },
+            where: { sid: req.params.sid },
         })
-        .then((reply) => {
-            return res.json({ services: reply });
+        .then((services) => {
+            return res.send(services);
         });
     },
 
@@ -18,10 +18,10 @@ module.exports = {
 
         return Service
         .findAll({
-            where: { sid: req.params.sid },
+            where: { },
         })
-        .then((reply) => {
-            return res.json({ services: reply });
+        .then((services) => {
+            return res.send(services);
         });
     },
 
@@ -37,8 +37,8 @@ module.exports = {
             .findAll({
                 where: { uid: uid, tid: tid },
             })
-            .then((reply) => {
-                return res.json({ services: reply });
+            .then((services) => {
+                return res.send(services);
             });
         }
         // 유저 id로 검색하는 경우
@@ -47,8 +47,8 @@ module.exports = {
             .findAll({
                 where: { uid: uid },
             })
-            .then((reply) => {
-                return res.json({ services: reply });
+            .then((services) => {
+                return res.send(services);
             });
         }
         // 통역사 id로 검색하는 경우
@@ -57,8 +57,8 @@ module.exports = {
             .findAll({
                 where: { tid: tid },
             })
-            .then((reply) => {
-                return res.json({ services: reply });
+            .then((services) => {
+                return res.send(services);
             });
         }
     },
