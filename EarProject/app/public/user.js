@@ -16,7 +16,9 @@ module.exports = {
         .then((reply) => {
             if( !reply )    
                 return res.status(500).send({ message: '로그인 정보를 확인해주세요.' });
+            reply.dataValues.isUser = true;
             console.log(reply.dataValues);
+
             jwt.sign(reply.dataValues, config.JWT_TOKEN, function(err, decode) {
                 if( err )   {
                     console.log("Error failed: " + err);

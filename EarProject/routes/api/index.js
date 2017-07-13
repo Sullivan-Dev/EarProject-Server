@@ -15,10 +15,11 @@ function verify (req, res, next) {
         }
         console.log(decoded);
         
-        if( decoded.uid )   {   // 유저인 경우
+        req.user = {};
+        if( decoded.isUser )   {   // 유저인 경우
             req.user.common = decoded;
         }
-        if( decoded.tid )   {   // 통역사인 경우
+        else if( decoded.isTranslator )   {   // 통역사인 경우
             req.user.translator = decoded;
         }
 

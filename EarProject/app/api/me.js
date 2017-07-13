@@ -6,10 +6,10 @@ module.exports = {
         console.log(`GET /api/me`);
 
         if( req.user.common )  {   // 유저인 경우
-            return res.json(req.user);    
+            return res.json(req.user.common);    
         }
         if( req.user.translator )    {   // 통역사인 경우
-            return res.json(req.translator);
+            return res.json(req.user.translator);
         }
     },
 

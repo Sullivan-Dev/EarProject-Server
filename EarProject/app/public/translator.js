@@ -16,6 +16,7 @@ module.exports = {
         .then((reply) => {
             if( !reply )    
                 return res.status(500).send({ message: '로그인 정보를 확인해주세요.' });
+            reply.dataValues.isTranslator = true;
             console.log(reply.dataValues);
             
             jwt.sign(reply.dataValues, config.JWT_TOKEN, function(err, decode) {
