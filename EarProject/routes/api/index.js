@@ -16,10 +16,10 @@ function verify (req, res, next) {
         console.log(decoded);
         
         if( decoded.uid )   {   // 유저인 경우
-            req.user = decoded;
+            req.user.common = decoded;
         }
         if( decoded.tid )   {   // 통역사인 경우
-            req.translator = decoded;
+            req.user.translator = decoded;
         }
 
         next();

@@ -6,20 +6,20 @@ module.exports = {
     modify(req, res) {
         console.log(`PUT /api/translator`);
         
-        const tid = req.body.tid || req.translator.tid;
-        const { did, mdn, password, name, gender } = req.body;
+        const id = req.body.id || req.user.translator.id;
+        const { districtId, mdn, password, name, gender } = req.body;
 
         return Translator
         .findOne({
-            where: { tid }
+            where: { id }
         })
         .then((translator) => {
             translator.update({
-                did:        ( did       || translator.did ),
-                mdn:        ( mdn       || translator.mdn ),
-                password:   ( password  || translator.password ),
-                name:       ( name      || translator.name  ),
-                gender:     ( gender    || translator.gender ),
+                districtId: ( districtId || translator.districtId ),
+                mdn:        ( mdn        || translator.mdn ),
+                password:   ( password   || translator.password ),
+                name:       ( name       || translator.name  ),
+                gender:     ( gender     || translator.gender ),
             });
         });
     },
@@ -27,11 +27,11 @@ module.exports = {
     delete(req, res) {
         console.log(`DELETE /api/translator`);
 
-        const tid = req.body.tid || req.translator.tid;
+        const id = req.body.id || req.user.translator.id;
 
         return Translator
         .destroy({
-            where: { tid: tid },
+            where: { id },
         })
         .then(() => {
             res.send({ message: '삭제되었습니다.'});

@@ -6,16 +6,16 @@ module.exports = {
     modify(req, res) {
         console.log(`PUT /api/user`);
         
-        const uid = req.body.uid || req.user.uid;
-        const { did, mdn, password, name, gender } = req.body;
+        const id = req.body.id || req.user.common.id;
+        const { districtId, mdn, password, name, gender } = req.body;
 
         return User
         .findOne({
-            where: { uid }
+            where: { id }
         })
         .then((user) => {
             user.update({
-                did:        ( did       || user.did ),
+                districtId: ( districtId|| user.districtId ),
                 mdn:        ( mdn       || user.mdn ),
                 password:   ( password  || user.password ),
                 name:       ( name      || user.name  ),
@@ -27,10 +27,10 @@ module.exports = {
     delete(req, res) {
         console.log(`DELETE /api/user`);
 
-        const uid = req.body.uid || req.user.uid;
+        const id = req.body.id || req.user.common.id;
 
         return User.destroy({
-            where: { uid: uid },
+            where: { id },
         })
         .then(() => {
             res.send({ message: '삭제되었습니다.'});

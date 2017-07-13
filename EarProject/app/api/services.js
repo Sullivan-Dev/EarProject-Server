@@ -4,9 +4,11 @@ module.exports = {
     get(req, res)  {
         console.log(`GET /api/services/sid`);
 
+        const id = req.params.id;
+
         return Service
         .findAll({
-            where: { sid: req.params.sid },
+            where: { id },
         })
         .then((services) => {
             return res.send(services);
@@ -28,34 +30,34 @@ module.exports = {
     find(req, res)  {
         console.log(`GET /api/services/find`);
 
-        const uid = req.query.uid;
-        const tid = req.query.tid;
+        const userId = req.query.userId;
+        const translatorId = req.query.translatorId;
 
         // 유저 id와 통역사 id로 검색하는 경우
-        if( uid && tid )    {
+        if( userId && translatorId )    {
             return Service
             .findAll({
-                where: { uid: uid, tid: tid },
+                where: { userId, translatorId },
             })
             .then((services) => {
                 return res.send(services);
             });
         }
         // 유저 id로 검색하는 경우
-        if( uid )   {
+        if( userId )   {
             return Service
             .findAll({
-                where: { uid: uid },
+                where: { userId },
             })
             .then((services) => {
                 return res.send(services);
             });
         }
         // 통역사 id로 검색하는 경우
-        if( tid )   {
+        if( translatorId )   {
             return Service
             .findAll({
-                where: { tid: tid },
+                where: { translatorId },
             })
             .then((services) => {
                 return res.send(services);
@@ -66,20 +68,20 @@ module.exports = {
     add(req, res)  {
         console.log(`POST /api/services`);
 
-        const { uid, tid, status, date, start, end, location, purpose, inquiry } = req.body;
-        console.log(uid, tid, status, date, start, end, location, purpose, inquiry); 
+        const { userId, translatorId, status, date, startTime, endTime, location, purpose, inquiry } = req.body;
+        console.log(userId, translatorId, status, date, startTime, endTime, location, purpose, inquiry); 
 
         return Service
         .create({
-            uid: uid,
-            tid: tid,
-            status: status,
-            date: date,
-            start: start,
-            end: end,
-            location: location,
-            purpose: purpose,
-            inquiry: inquiry
+            userId,
+            translatorId,
+            status,
+            date,
+            startTime,
+            endTime,
+            location,
+            purpose,
+            inquiry
         })
         .then(() => {
             res.send({ message: '등록되었습니다..'});
@@ -89,24 +91,24 @@ module.exports = {
     modify(req, res)  {
         console.log(`PUT /api/services`);
 
-        const { sid, uid, tid, status, date, start, end, location, purpose, inquiry } = req.body;
-        console.log(uid, tid, status, date, start, end, location, purpose, inquiry); 
+        const { id, userId, translatorId, status, date, startTime, endTime, location, purpose, inquiry } = req.body;
+        console.log(id, userId, translatorId, status, date, startTime, endTime, location, purpose, inquiry);
 
         return Service
         .findOne({
-            where: { sid }
+            where: { id }
         })
         .then((service) => {
             service.update({
-                uid:        ( uid       || service.uid ),
-                tid:        ( tid       || service.tid ),
-                status:     ( status    || service.status ),
-                date:       ( date      || service.date  ),
-                start:      ( start     || service.start ),
-                end:        ( end       || service.end ),
-                location:   ( location  || service.location ),
-                purpose:    ( purpose   || service.purpose ),
-                inquiry:    ( inquiry   || service.inquiry ),
+                userId:       ( userId       || service.userId ),
+                translatorId: ( translatorId || service.translatorId ),
+                status:       ( status       || service.status ),
+                date:         ( date         || service.date  ),
+                startTime:    ( startTime    || service.startTime ),
+                endTime:      ( endTime      || service.endTime ),
+                location:     ( location     || service.location ),
+                purpose:      ( purpose      || service.purpose ),
+                inquiry:      ( inquiry      || service.inquiry ),
             });
         });
     },
@@ -114,11 +116,11 @@ module.exports = {
     delete(req, res)  {
         console.log(`DELETE /api/services`);
 
-        const { sid } = req.body;
+        const { id } = req.body;
 
         return Service
         .destroy({
-            where: { sid: sid },
+            where: { id },
         })
         .then(() => {
             res.send({ message: '삭제되었습니다.'});

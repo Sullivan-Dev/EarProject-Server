@@ -2,16 +2,16 @@ const Sequelize = require('sequelize');
 const sequelize = require('./sequelize');
 
 module.exports = sequelize.define('Service', {
-	sid: {
+	id: {
 		primaryKey: true,
 		type: Sequelize.INTEGER,
 		autoIncrement: true
 	},
-	uid: {
-		type: Sequelize.STRING
+	userId: {
+		type: Sequelize.INTEGER
 	},
-	tid: {
-		type: Sequelize.STRING
+	translatorId: {
+		type: Sequelize.INTEGER
 	},
 	status: {
 		type: Sequelize.STRING
@@ -19,10 +19,10 @@ module.exports = sequelize.define('Service', {
 	date: {
 		type: Sequelize.STRING
 	}, 
-	start: {
+	startTime: {
 		type: Sequelize.STRING
 	}, 
-	end: {
+	endTime: {
 		type: Sequelize.STRING
 	}, 
 	location: {

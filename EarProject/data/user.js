@@ -2,12 +2,12 @@ const Sequelize = require('sequelize');
 const sequelize = require('./sequelize');
 
 module.exports = sequelize.define('User', {
-	uid: {
+	id: {
 		primaryKey: true,
 		type: Sequelize.INTEGER,
 		autoIncrement: true
 	},
-	did: {
+	districtId: {
 		type: Sequelize.INTEGER,
 		defaultValue: 0,
 	},

@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('./sequelize');
 
 module.exports = sequelize.define('District', {
-	did: {
+	id: {
 		primaryKey: true,
 		type: Sequelize.INTEGER,
 		autoIncrement: true

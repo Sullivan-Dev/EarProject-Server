@@ -5,10 +5,10 @@ module.exports = {
     getMe(req, res) {
         console.log(`GET /api/me`);
 
-        if( req.user )  {   // 유저인 경우
+        if( req.user.common )  {   // 유저인 경우
             return res.json(req.user);    
         }
-        if( req.translator )    {   // 통역사인 경우
+        if( req.user.translator )    {   // 통역사인 경우
             return res.json(req.translator);
         }
     },
@@ -16,10 +16,10 @@ module.exports = {
     modify(req, res)  {
         console.log(`PUT /api/me`);
 
-        if( req.user )  {
+        if( req.user.common )  {
             return user.modify(req, res);
         }
-        if( req.translator )  {
+        if( req.user.translator )  {
             return translator.modify(req, res);
         }
     },
@@ -27,10 +27,10 @@ module.exports = {
     delete(req, res)  {
         console.log(`DELETE /api/me`);
 
-        if( req.user )  {
+        if( req.user.common )  {
             return user.delete(req, res);
         }
-        if( req.translator )  {
+        if( req.user.translator )  {
             return translator.delete(req, res);
         }
     }

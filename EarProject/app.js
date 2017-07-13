@@ -15,8 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(3030, () => {
-  console.log(`Server is running on 3030 port`);
+app.listen(3000, () => {
+  console.log(`Server is running on 3000 port`);
 });
 
 app.use('/', routes);

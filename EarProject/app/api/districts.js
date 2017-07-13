@@ -4,11 +4,11 @@ module.exports = {
     get(req, res) {
         console.log(`GET /api/district`);
         
-        const did = req.query.did;
+        const id = req.query.id;
 
         return District
         .findOne({
-            where: { did }
+            where: { id }
         })
         .then((reply) => {
             if( !reply )    
@@ -25,9 +25,9 @@ module.exports = {
 
         return District
         .create({
-            name: name,
-            address: address,
-            tel: tel,
+            name,
+            address,
+            tel,
         })
         .then(() => {
             res.send({ message: '추가되었습니다.'});
@@ -37,10 +37,10 @@ module.exports = {
     delete(req, res)  {
         console.log(`DELETE /api/district`);
 
-        const { did } = req.body;
+        const { id } = req.body;
 
         return District.destroy({
-            where: { did: did },
+            where: { id },
         })
         .then(() => {
             res.send({ message: '삭제되었습니다.'});
@@ -50,19 +50,19 @@ module.exports = {
     find(req, res)  {
         console.log(`GET /api/district/find`);
 
-        const did = req.query.did;
+        const id = req.query.id;
 
         User
         .findAll({
-            where: { did: did },
+            where: { id: id },
         })
         .then((users) => {
             return Translator
             .findAll({
-                where: { did: did },
+                where: { id },
             })
             .then((translators) => {
-                res.send({ sers: users, 
+                res.send({ users: users, 
                            translators: translators });
             });
         });
@@ -71,16 +71,16 @@ module.exports = {
     modify(req, res)  {
         console.log(`PUT /api/district`);
 
-        const { did, name, address, tel } = req.body;
-        console.log(did, name, address, tel); 
+        const { id, name, address, tel } = req.body;
+        console.log(id, name, address, tel); 
 
         return District
         .update({
-            name: name,
-            address: address,
-            tel: tel,
+            name,
+            address,
+            tel,
         }, {
-            where: { did: did },
+            where: { id },
         })
         .then(() => {
             res.send({ message: '변경되었습니다..'});
