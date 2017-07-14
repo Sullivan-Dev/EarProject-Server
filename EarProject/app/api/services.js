@@ -1,21 +1,7 @@
 const { Service } = require('../../data');
 
 module.exports = {
-    get(req, res)  {
-        console.log(`GET /api/services/sid`);
-
-        const id = req.params.id;
-
-        return Service
-        .findAll({
-            where: { id },
-        })
-        .then((services) => {
-            return res.send(services);
-        });
-    },
-
-    getAll(req, res)  {
+    getAll({ })  {
         console.log(`GET /api/services`);
 
         return Service
@@ -23,15 +9,24 @@ module.exports = {
             where: { },
         })
         .then((services) => {
-            return res.send(services);
+            return { status: 200, data: services };
         });
     },
 
-    find(req, res)  {
-        console.log(`GET /api/services/find`);
+    get({ id })  {
+        console.log(`GET /api/services/id`);
 
-        const userId = req.query.userId;
-        const translatorId = req.query.translatorId;
+        return Service
+        .findAll({
+            where: { id },
+        })
+        .then((services) => {
+            return { status: 200, data: services };
+        });
+    },
+
+    find({ userId, translatorId })  {
+        console.log(`GET /api/services/find`);
 
         // 유저 id와 통역사 id로 검색하는 경우
         if( userId && translatorId )    {
@@ -40,7 +35,7 @@ module.exports = {
                 where: { userId, translatorId },
             })
             .then((services) => {
-                return res.send(services);
+                return { status: 200, data: services };
             });
         }
         // 유저 id로 검색하는 경우
@@ -50,7 +45,7 @@ module.exports = {
                 where: { userId },
             })
             .then((services) => {
-                return res.send(services);
+                return { status: 200, data: services };
             });
         }
         // 통역사 id로 검색하는 경우
@@ -60,15 +55,13 @@ module.exports = {
                 where: { translatorId },
             })
             .then((services) => {
-                return res.send(services);
+                return { status: 200, data: services };
             });
         }
     },
 
-    add(req, res)  {
+    add({ userId, translatorId, status, date, startTime, endTime, location, purpose, inquiry })  {
         console.log(`POST /api/services`);
-
-        const { userId, translatorId, status, date, startTime, endTime, location, purpose, inquiry } = req.body;
         console.log(userId, translatorId, status, date, startTime, endTime, location, purpose, inquiry); 
 
         return Service
@@ -84,14 +77,12 @@ module.exports = {
             inquiry
         })
         .then(() => {
-            res.send({ message: '등록되었습니다..'});
+            return { status: 200, message: '등록되었습니다.' };
         });
     },
 
-    modify(req, res)  {
+    modify({ id, userId, translatorId, status, date, startTime, endTime, location, purpose, inquiry })  {
         console.log(`PUT /api/services`);
-
-        const { id, userId, translatorId, status, date, startTime, endTime, location, purpose, inquiry } = req.body;
         console.log(id, userId, translatorId, status, date, startTime, endTime, location, purpose, inquiry);
 
         return Service
@@ -109,21 +100,22 @@ module.exports = {
                 location:     ( location     || service.location ),
                 purpose:      ( purpose      || service.purpose ),
                 inquiry:      ( inquiry      || service.inquiry ),
+            })
+            .then(() => {
+                return { status: 200, message: '변경되었습니다.' };
             });
         });
     },
 
-    delete(req, res)  {
+    delete({ id })  {
         console.log(`DELETE /api/services`);
-
-        const { id } = req.body;
 
         return Service
         .destroy({
             where: { id },
         })
         .then(() => {
-            res.send({ message: '삭제되었습니다.'});
+            return { status: 200, message: '삭제되었습니다.' };
         });
     }
 }

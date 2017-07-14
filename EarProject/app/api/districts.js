@@ -1,26 +1,38 @@
 const { District, User, Translator } = require('../../data');
 
 module.exports = {
-    get(req, res) {
+    getAll({ })  {
         console.log(`GET /api/district`);
-        
-        const id = req.query.id;
+
+        return District
+        .findAll({
+            where: { },
+        })
+        .then((districts) => {
+            if( !districts )
+                return { status: 404, message: '센터가 존재하지 않습니다.' };
+            else
+                return { status: 200, data: districts };
+        });
+    },
+
+    get({ id }) {
+        console.log(`GET /api/district/id`);
 
         return District
         .findOne({
             where: { id }
         })
-        .then((reply) => {
-            if( !reply )    
-                return res.status(500).send({message: '존재하지 않는 센터입니다.'});
-            res.send( reply.dataValues );
+        .then((district) => {
+             if( !district )    
+                return { status: 404, message: '존재하지 않는 센터입니다.' };
+            else
+                return { status: 200, data: district.dataValues };
         });
     },
 
-    add(req, res)   {
+    add({ name, address, tel })   {
         console.log(`POST /api/district`);
-
-        const { name, address, tel } = req.body;
         console.log(name, address, tel); 
 
         return District
@@ -30,27 +42,23 @@ module.exports = {
             tel,
         })
         .then(() => {
-            res.send({ message: '추가되었습니다.'});
+            return { status: 200, message: '추가되었습니다.' };
         });
     },
 
-    delete(req, res)  {
+    delete({ id })  {
         console.log(`DELETE /api/district`);
-
-        const { id } = req.body;
 
         return District.destroy({
             where: { id },
         })
         .then(() => {
-            res.send({ message: '삭제되었습니다.'});
+            return { status: 200, message: '삭제되었습니다.' };
         });
     },
 
-    find(req, res)  {
+    find({ id })  {
         console.log(`GET /api/district/find`);
-
-        const id = req.query.id;
 
         User
         .findAll({
@@ -62,16 +70,14 @@ module.exports = {
                 where: { id },
             })
             .then((translators) => {
-                res.send({ users: users, 
-                           translators: translators });
+                return { status: 200, data: { users: users, 
+                                              translators: translators } };
             });
         });
     },
 
-    modify(req, res)  {
+    modify({ id, name, address, tel })  {
         console.log(`PUT /api/district`);
-
-        const { id, name, address, tel } = req.body;
         console.log(id, name, address, tel); 
 
         return District
@@ -83,7 +89,7 @@ module.exports = {
             where: { id },
         })
         .then(() => {
-            res.send({ message: '변경되었습니다..'});
+            return { status: 200, message: '변경되었습니다.' };
         });
     },
 }

@@ -13,7 +13,7 @@ module.exports = {
         })
         .then((translator) => {
             if( !reply )    
-                return { status: 500, data: '로그인 정보를 확인해주세요.' };
+                return { status: 500, message: '로그인 정보를 확인해주세요.' };
             reply.dataValues.isTranslator = true;
             console.log(reply.dataValues);
             
@@ -53,7 +53,7 @@ module.exports = {
         })
         .then((translator) => {
             if( translator )  
-                return { status: 500, data: '이미 가입된 회원입니다.' };
+                return { status: 500, message: '이미 가입된 회원입니다.' };
             
             return Translator
             .create({
@@ -64,7 +64,7 @@ module.exports = {
                 districtId
             })
             .then(() => {
-                return { status: 200, data: '가입되었습니다.' };
+                return { status: 200, message: '가입되었습니다.' };
             });
         });
     },

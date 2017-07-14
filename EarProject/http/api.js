@@ -3,7 +3,7 @@ const ENV_NODE = 'dev';
 
 const apiResponse = (func) => {
   return (req, res, next) => {
-    const bindParams = _.assign(req.body, req.params, req.query);
+    const bindParams = _.assign(req.body, req.params, req.query, req.user);
 
     Promise.resolve()
     .then(() => {
@@ -13,7 +13,7 @@ const apiResponse = (func) => {
       if (!reply) {
         res.status(404).send({ message: 'Not found' });
       }
-      res.status(reply.status).send(reply.data);
+      res.status(reply.status).send({ data: reply.data, message: reply.message });
     })
     .catch((error) => {
       if (ENV_NODE === 'dev') {

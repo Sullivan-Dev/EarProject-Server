@@ -3,11 +3,11 @@ const config = require('../../config');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
-    modify(req, res) {
+    modify({ common, id, districtId, mdn, password, name, gender }) {
         console.log(`PUT /api/user`);
         
-        const id = req.body.id || req.user.common.id;
-        const { districtId, mdn, password, name, gender } = req.body;
+        if( !id )
+            id = common.id;
 
         return User
         .findOne({
@@ -20,20 +20,24 @@ module.exports = {
                 password:   ( password  || user.password ),
                 name:       ( name      || user.name  ),
                 gender:     ( gender    || user.gender ),
+            })
+            .then(() => {
+                return { status: 200, message: '변경되었습니다.' };
             });
         });
     },
 
-    delete(req, res) {
+    delete({ common, id }) {
         console.log(`DELETE /api/user`);
 
-        const id = req.body.id || req.user.common.id;
+        if( !id )
+            id = common.id;
 
         return User.destroy({
             where: { id },
         })
         .then(() => {
-            res.send({ message: '삭제되었습니다.'});
+            return { status: 200, message: '삭제되었습니다.' };
         });
     }
 }

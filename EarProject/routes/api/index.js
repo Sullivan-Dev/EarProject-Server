@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
 const { contacts, me, services, sessions, districts, user, translator } = require('../../app/api');
+const { apiResponse } = require('../../http');
 const config = require('../../config');
 
 function verify (req, res, next) {
@@ -27,26 +28,27 @@ function verify (req, res, next) {
     });
 }
 
-router.get('/me', verify, me.getMe)
-      .put('/me', verify, me.modify)
-      .delete('/me', verify, me.delete);
+router.get('/me', verify, apiResponse(me.getMe))
+      .put('/me', verify, apiResponse(me.modify))
+      .delete('/me', verify, apiResponse(me.delete));
 
-router.put('/user', verify, user.modify)
-      .delete('/user', verify, user.delete);
+router.put('/user', verify, apiResponse(user.modify))
+      .delete('/user', verify, apiResponse(user.delete));
 
-router.put('/translator', verify, translator.modify)
-      .delete('/translator', verify, translator.delete);
+router.put('/translator', verify, apiResponse(translator.modify))
+      .delete('/translator', verify, apiResponse(translator.delete));
 
-router.get('/district', districts.get)
-      .post('/district', districts.add)
-      .delete('/district', districts.delete)
-      .put('/district', districts.modify);
+router.get('/district', apiResponse(districts.getAll))
+      .get('/district/:id', apiResponse(districts.get))
+      .post('/district', apiResponse(districts.add))
+      .delete('/district', apiResponse(districts.delete))
+      .put('/district', apiResponse(districts.modify));
 
-router.get('/services', services.getAll)
-      .get('/services/:sid', services.get)
-      .get('/services/find', services.find)
-      .post('/services', services.add)
-      .delete('/services', services.delete)
-      .put('/services', services.modify);
+router.get('/services', apiResponse(services.getAll))
+      .get('/services/:id', apiResponse(services.get))
+      .get('/services/find', apiResponse(services.find))
+      .post('/services', apiResponse(services.add))
+      .delete('/services', apiResponse(services.delete))
+      .put('/services', apiResponse(services.modify));
 
 module.exports = router;

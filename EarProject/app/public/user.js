@@ -13,20 +13,23 @@ module.exports = {
         })
         .then((user) => {
             if( !user )    
-                return { status: 500, data: '로그인 정보를 확인해주세요.' };
+                return { status: 500, message: '로그인 정보를 확인해주세요.' };
 
             user.dataValues.isUser = true;
             console.log(user.dataValues);
 
-            const token = new Promise((resolve, reject) => {
+            // Error : 프라미스부분을 기다리지 않고 지나가버림.
+            const p = new Promise((resolve, reject) => {
                 jwt.sign(user.dataValues, config.JWT_TOKEN, function(err, encoded) {
                     if( err )   {
                         reject(err);
                     }
                     resolve(encoded);
                 });
+            })
+            .then((token) => {        
+                return { status: 200, data: token };
             });
-            return { status: 200, data: token };
         });
     },
 
@@ -54,7 +57,7 @@ module.exports = {
         })
         .then((user) => {
             if( user )  
-                return { status: 500, data: '이미 가입된 회원입니다.' };
+                return { status: 500, message: '이미 가입된 회원입니다.' };
             
             return User
             .create({
@@ -65,7 +68,7 @@ module.exports = {
                 districtId
             })
             .then(() => {
-                return { status: 200, data: '가입되었습니다.' };
+                return { status: 200, message: '가입되었습니다.' };
             });
         });
     },

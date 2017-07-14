@@ -2,36 +2,45 @@ const user = require('./user');
 const translator = require('./translator');
 
 module.exports = {
-    getMe(req, res) {
+    getMe({ common, translator }) {
         console.log(`GET /api/me`);
 
-        if( req.user.common )  {   // 유저인 경우
-            return res.json(req.user.common);    
+        if( common )  {              // 유저인 경우
+            return { status: 200, data: common };
         }
-        if( req.user.translator )    {   // 통역사인 경우
-            return res.json(req.user.translator);
+        else if( translator )    {   // 통역사인 경우
+            return { status: 200, data: translator };
+        }
+        else    {
+            return { status: 404, message: "잘못된 토큰입니다." };
         }
     },
 
-    modify(req, res)  {
+    modify(bindParams)  {
         console.log(`PUT /api/me`);
 
-        if( req.user.common )  {
-            return user.modify(req, res);
+        if( bindParams.common )  {
+            return user.modify(bindParams);
         }
-        if( req.user.translator )  {
-            return translator.modify(req, res);
+        else if( bindParams.translator )    {
+            return translator.modify(bindParams);
+        }
+        else    {
+            return { status: 404, message: "잘못된 토큰입니다." };
         }
     },
 
-    delete(req, res)  {
+    delete(bindParams)  {
         console.log(`DELETE /api/me`);
 
-        if( req.user.common )  {
-            return user.delete(req, res);
+        if( bindParams.common )  {
+            return user.delete(bindParams);
         }
-        if( req.user.translator )  {
-            return translator.delete(req, res);
+        else if( bindParams.translator )    {
+            return translator.delete(bindParams);
+        }
+        else    {
+            return { status: 404, message: "잘못된 토큰입니다." };
         }
     }
 }
