@@ -3,62 +3,69 @@ const config = require('../../config');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
-    login(req, res) {
+    login({ mdn, password }) {
         console.log(`POST /public/translator/login`);
-
-        const { mdn, password } = req.body;
         console.log(mdn, password);
         
         return Translator
         .findOne({
             where: { mdn, password }
         })
-        .then((reply) => {
+        .then((translator) => {
             if( !reply )    
-                return res.status(500).send({ message: '로그인 정보를 확인해주세요.' });
+                return { status: 500, data: '로그인 정보를 확인해주세요.' };
             reply.dataValues.isTranslator = true;
             console.log(reply.dataValues);
             
-            jwt.sign(reply.dataValues, config.JWT_TOKEN, function(err, decode) {
-                if( err )   {
-                    console.log("Error failed: " + err);
-                    return;
-                }
-                res.json({ token: decode });
+            const token = new Promise((resolve, reject) => {
+                jwt.sign(translator.dataValues, config.JWT_TOKEN, function(err, encoded) {
+                    if( err )   {
+                        reject(err);
+                    }
+                    resolve(encoded);
+                });
             });
+            return { status: 200, data: token };
         });
     },
 
-    verify(req, res) {
+    verify({ token }) {
         console.log(`POST /public/translator/verify`);
 
-        const { token } = req.body;
-
-        jwt.verify(token, config.JWT_TOKEN, (err, decoded) => {
-            if( err )   {
-                console.log(err);
-                return res.status(403).send({ message: '서버에 접속할 수 없습니다. 다시 로그인해주세요.' });
-            }
-            return res.json({ login : true });
+        const result = new Promise((resolve, reject) => {
+            jwt.verify(token, config.JWT_TOKEN, (err, decoded) => {
+                if( err )   {
+                    reject(err);
+                }
+                resolve(decoded);
+            });
         });
+        return { status: 200, data: result };
     },
 
-    signup(req, res) {
+    signup({ name, mdn, password, gender, districtId }) {
         console.log(`POST /public/translator/signup`);
-
-        const { name, mdn, password, gender, districtId } = req.body;
         console.log(name, mdn, password, gender, districtId); 
 
         return Translator
-        .create({
-            name,
-            mdn,
-            password,
-            gender,
-            districtId
+        .findOne({
+            where: { mdn }
         })
-        .then(() => {
-            res.send({ message: '회원가입이 완료되었습니다.' });
+        .then((translator) => {
+            if( translator )  
+                return { status: 500, data: '이미 가입된 회원입니다.' };
+            
+            return Translator
+            .create({
+                name,
+                mdn,
+                password,
+                gender,
+                districtId
+            })
+            .then(() => {
+                return { status: 200, data: '가입되었습니다.' };
+            });
         });
     },
 }
