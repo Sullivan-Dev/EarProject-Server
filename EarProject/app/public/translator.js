@@ -17,30 +17,30 @@ module.exports = {
             reply.dataValues.isTranslator = true;
             console.log(reply.dataValues);
             
-            const token = new Promise((resolve, reject) => {
+            const p = new Promise((resolve, reject) => {
                 jwt.sign(translator.dataValues, config.JWT_TOKEN, function(err, encoded) {
                     if( err )   {
                         reject(err);
                     }
-                    resolve(encoded);
+                    resolve({ status: 200, data: encoded });
                 });
             });
-            return { status: 200, data: token };
+            return p;
         });
     },
 
     verify({ token }) {
         console.log(`POST /public/translator/verify`);
 
-        const result = new Promise((resolve, reject) => {
+        const p = new Promise((resolve, reject) => {
             jwt.verify(token, config.JWT_TOKEN, (err, decoded) => {
                 if( err )   {
                     reject(err);
                 }
-                resolve(decoded);
+                resolve({ status: 200, data: decoded });
             });
         });
-        return { status: 200, data: result };
+        return p;
     },
 
     signup({ name, mdn, password, gender, districtId }) {

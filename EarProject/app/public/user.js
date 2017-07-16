@@ -18,33 +18,30 @@ module.exports = {
             user.dataValues.isUser = true;
             console.log(user.dataValues);
 
-            // Error : 프라미스부분을 기다리지 않고 지나가버림.
             const p = new Promise((resolve, reject) => {
                 jwt.sign(user.dataValues, config.JWT_TOKEN, function(err, encoded) {
                     if( err )   {
                         reject(err);
                     }
-                    resolve(encoded);
+                    resolve({ status: 200, data: encoded });
                 });
-            })
-            .then((token) => {        
-                return { status: 200, data: token };
             });
+            return p;
         });
     },
 
     verify({ token }) {
         console.log(`POST /public/user/verify`);
 
-        const result = new Promise((resolve, reject) => {
+        const p = new Promise((resolve, reject) => {
             jwt.verify(token, config.JWT_TOKEN, (err, decoded) => {
                 if( err )   {
                     reject(err);
                 }
-                resolve(decoded);
+                resolve({ status: 200, data: decoded });
             });
         });
-        return { status: 200, data: result };
+        return p;
     },
 
     signup({ name, mdn, password, gender, districtId }) {
